@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include 'accounts/_auth_form.html' with title='회원정보수정' submit_label='수정하기' show_password_link=True %}
+{% endblock content %}
