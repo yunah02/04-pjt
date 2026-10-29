@@ -37,7 +37,7 @@ class CustomUserChangeForm(BootstrapFormMixin, UserChangeForm):
 
     class Meta(UserChangeForm.Meta):
         model = get_user_model()
-        fields = ('email', 'first_name', 'last_name')
+        fields = ('email', 'first_name', 'last_name', 'introduction')
 
 
 class CustomPasswordChangeForm(BootstrapFormMixin, PasswordChangeForm):

@@ -482,3 +482,62 @@ select {
     padding: 2rem 1rem;
   }
 }
+
+/* 헤더: 왼쪽 메뉴 / 가운데 로고 / 오른쪽 메뉴 */
+.header-left { display: flex; align-items: center; gap: 1.25rem; }
+.header-left a,
+.header-right a,
+.nav-btn { font-size: 0.8rem; color: var(--muted); white-space: nowrap; transition: color 0.2s; }
+.header-left a:hover,
+.header-right a:hover,
+.nav-btn:hover { color: var(--ink); }
+.header-right form { margin: 0; }
+.nav-btn { padding: 0; border: 0; background: none; cursor: pointer; }
+
+@media (max-width: 600px) {
+  .header-left { gap: 0.6rem; }
+  .header-left a, .header-right a, .nav-btn { font-size: 0.7rem; }
+}
+
+/* 홈을 뺀 모든 페이지의 공통 폭 */
+.page { width: min(100% - 48px, 640px); margin: 3rem auto 5rem; }
+.page.messages { margin: 1.5rem auto 0; }
+.page-title { font-size: 1.8rem; margin-bottom: 1.5rem; }
+.section-title { font-size: 1.2rem; margin-top: 2.5rem; }
+
+/* 폼 */
+.page label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--muted); }
+.page form > div,
+.field { margin-bottom: 1.25rem; }
+.page .form-control { border-radius: 0; border: 1px solid var(--line); background: var(--white); }
+.page .form-control:focus { border-color: var(--ink); box-shadow: none; }
+.helptext, .page .form-text { margin-top: 0.3rem; font-size: 0.75rem; color: var(--muted); }
+.helptext ul { padding-left: 1.1rem; margin: 0; }
+.errorlist, .field-error { list-style: none; padding: 0; margin: 0.3rem 0 0; font-size: 0.8rem; color: #b3261e; }
+
+/* 버튼 */
+.btn-ink { cursor: pointer; }
+.btn-line {
+  display: inline-flex; justify-content: center; align-items: center;
+  min-height: 44px; padding: 0.8rem 1.5rem;
+  color: var(--ink); background: transparent;
+  border: 1px solid var(--ink); border-radius: 0;
+  font-size: 0.82rem; cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.btn-line:hover { color: var(--white); background: var(--ink); }
+.btn-line.danger { color: #b3261e; border-color: #b3261e; }
+.btn-line.danger:hover { color: var(--white); background: #b3261e; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 2rem; }
+.actions form { margin: 0; }
+
+/* 상세 / 프로필 */
+.meta { font-size: 0.85rem; color: var(--muted); }
+.description { margin: 1.5rem 0; line-height: 1.9; }
+.author-box { margin-top: 2.5rem; padding: 1.5rem; background: var(--white); border: 1px solid var(--line); }
+.author-box h2 { font-size: 1.1rem; }
+.notice { margin: 0.5rem 0 1rem; font-size: 0.75rem; color: var(--muted); }
+.info-row { display: flex; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--line); }
+.info-row dt { width: 5rem; font-size: 0.85rem; font-weight: 400; color: var(--muted); }
+.info-row dd { margin: 0; }
+.list-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line); }

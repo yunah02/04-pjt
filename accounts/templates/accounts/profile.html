@@ -1,18 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>{{ person.username }}님의 프로필</h1>
+  <h1 class="page-title">{{ person.username }}님의 프로필</h1>
 
-  {% if person.introduction %}
-    <p>{{ person.introduction }}</p>
+  <dl>
+    <div class="info-row"><dt>아이디</dt><dd>{{ person.username }}</dd></div>
+    {% if request.user == person %}
+      <div class="info-row"><dt>이메일</dt><dd>{{ person.email|default:"-" }}</dd></div>
+    {% endif %}
+    <div class="info-row"><dt>이름</dt><dd>{{ person.last_name }}{{ person.first_name|default:"-" }}</dd></div>
+    {% if person.introduction %}
+      <div class="info-row"><dt>소개</dt><dd>{{ person.introduction }}</dd></div>
+    {% endif %}
+  </dl>
+
+  {% if request.user == person %}
+    <div class="actions">
+      <a href="{% url 'accounts:update' %}" class="btn-line">회원정보수정</a>
+      <form action="{% url 'accounts:delete' %}" method="POST"
+            onsubmit="return confirm('정말 탈퇴하시겠습니까?');">
+        {% csrf_token %}
+        <button type="submit" class="btn-line danger">회원탈퇴</button>
+      </form>
+    </div>
   {% endif %}
 
-  <h2>작성한 도서</h2>
+  <h2 class="section-title">작성한 도서</h2>
   {% for book in person.book_set.all %}
-    <p>
+    <div class="list-row">
       <a href="{% url 'books:detail' book.pk %}">{{ book.title }}</a>
-      <small>{{ book.author }}</small>
-    </p>
+      <span class="meta">{{ book.author }}</span>
+    </div>
   {% empty %}
-    <p>아직 작성한 도서가 없어요.</p>
+    <p class="meta">아직 작성한 도서가 없어요.</p>
   {% endfor %}
 {% endblock %}
