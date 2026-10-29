@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="col-md-8 mx-auto">
+    <h1 class="h3 mb-4">수정하기</h1>
+    <form action="{% url 'books:update' book.pk %}" method="POST">
+      {% csrf_token %}
+      {{ form.as_div }}
+      <button class="btn btn-primary mt-3">수정하기</button>
+      <a href="{% url 'books:detail' book.pk %}" class="btn btn-outline-secondary mt-3">취소</a>
+    </form>
+  </div>
+{% endblock %}
