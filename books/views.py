@@ -4,7 +4,7 @@ from django.views.decorators.http import require_safe, require_http_methods, req
 from .models import Book
 from .forms import BookForm
 import os
-import anthropic
+import requests
 from dotenv import load_dotenv
 from django.contrib import messages
 load_dotenv()
@@ -58,14 +58,17 @@ def delete(request, pk):
         book.delete()
     return redirect('books:index')
 
+GMS_URL = 'https://gms.ssafy.io/gmsapi/api.openai.com/v1/responses'
+
+
 @login_required
 @require_POST
 def generate_author_info(request, pk):
     book = get_object_or_404(Book, pk=pk)
 
-    api_key = os.getenv('ANTHROPIC_API_KEY')
+    api_key = os.getenv('GMS_KEY')
     if not api_key:
-        messages.error(request, 'API 키가 설정되지 않았어요.')
+        messages.error(request, 'GMS_KEY가 설정되지 않았어요. .env 파일을 확인해 주세요.')
         return redirect('books:detail', book.pk)
 
     prompt = (
@@ -74,14 +77,30 @@ def generate_author_info(request, pk):
     )
 
     try:
-        client = anthropic.Anthropic(api_key=api_key)
-        response = client.messages.create(
-            model='claude-sonnet-5-5',
-            max_tokens=500,
-            messages=[{'role': 'user', 'content': prompt}],
+        res = requests.post(
+            GMS_URL,
+            headers={
+                'Content-Type': 'application/json',
+                'Authorization': f'Bearer {api_key}',
+            },
+            json={'model': 'gpt-4.1', 'input': prompt},
+            timeout=30,
         )
-        book.author_info = response.content[0].text
-        book.save()
+        res.raise_for_status()
+
+        # 응답에서 텍스트만 꺼내기
+        text = ''
+        for item in res.json().get('output', []):
+            if item.get('type') == 'message':
+                for part in item.get('content', []):
+                    if part.get('type') == 'output_text':
+                        text += part.get('text', '')
+
+        if text:
+            book.author_info = text
+            book.save()
+        else:
+            messages.error(request, 'AI 응답이 비어 있어요. 다시 시도해 주세요.')
     except Exception:
         messages.error(request, '작가 정보를 가져오지 못했어요. 잠시 후 다시 시도해 주세요.')
 

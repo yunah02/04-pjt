@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.validators import MaxValueValidator
 from django.db import models
 
 
@@ -7,7 +8,8 @@ class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=50)
     description = models.TextField()
-    author_info = models.TextField(blank=True)  
+    customer_review_rank = models.PositiveSmallIntegerField(validators=[MaxValueValidator(10)])   # 추가
+    author_info = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -4,6 +4,7 @@
   <p>저자: {{ book.author }}</p>
   <p>작성자: <a href="{% url 'accounts:profile' book.user.username %}">{{ book.user.username }}</a></p>
   <p>{{ book.description }}</p>
+    <p>회원 리뷰 평점: {{ book.customer_review_rank }} / 10</p>
   <p>
     <small>작성 {{ book.created_at }} · 수정 {{ book.updated_at }}</small>
   </p>
