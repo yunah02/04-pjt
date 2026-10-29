@@ -139,6 +139,7 @@ python -m pip show anthropic
 # (이 프로젝트에 꼭 필요한 패키지는 django, anthropic, python-dotenv 입니다)
 
 # 3. 환경변수 설정 (AI 작가 정보 기능에 필요)
+mv ".env example" .env.example
 cp .env.example .env
 # .env 파일을 열어 ANTHROPIC_API_KEY=발급받은_키 로 수정 ANTHROPIC_API_KEY=발급받은_키
 
@@ -202,4 +203,12 @@ python manage.py runserver
 뒷부분을 맡아서 처음엔 **살짝 어렵게 느껴지는 부분**도 있었지만, 도서 CRUD의 권한 처리부터 **심화 기능(User 커스터마이징, 프로필 페이지, AI 작가 정보 생성)** 까지 직접 구현해 볼 수 있어서 의미 있었습니다. 특히 외부 AI API를 서버에서 호출해 결과를 DB에 저장하고 화면에 보여주는 과정은 "내가 만든 서비스에 AI가 들어갔다"는 느낌이 들어서 가장 재미있었습니다.
 화면 모양과 배치도 더 다듬어 마음에 드는 기능 구현과 디자인을 함께 하고 싶어, 메인 화면처럼 도서 상세·프로필·폼 화면도 통일감 있게 꾸며 보았습니다. 완성본이 생각보다 통일감있고 깔끔하게 생각보다 더 잘 나와서 프론트엔드와 같이 화면을 꾸미는 것이 즐겁다는 것을 새롭게 알게 되었고 흥미를 찾은 것 같습니다. 
 
-
+### 이미지 정리
+![alt text](images/create.png)
+![alt text](images/edit.png)
+![alt text](images/edit1.png)
+![alt text](images/login.png)
+![alt text](images/main.png)
+![alt text](images/main1.png)
+![alt text](images/profiles.png)
+![alt text](images/register.png)
