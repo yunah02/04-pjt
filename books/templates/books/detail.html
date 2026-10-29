@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ book.title }}</h1>
+  <p>저자: {{ book.author }}</p>
+  <p>작성자: <a href="{% url 'accounts:profile' book.user.username %}">{{ book.user.username }}</a></p>
+  <p>{{ book.description }}</p>
+  <p>
+    <small>작성 {{ book.created_at }} · 수정 {{ book.updated_at }}</small>
+  </p>
+
+  <hr>
+  <h2>작가 정보</h2>
+  {% if book.author_info %}
+    <p>{{ book.author_info }}</p>
+  {% else %}
+    <p>아직 작가 정보가 없어요.</p>
+  {% endif %}
+
+  <form action="{% url 'books:generate_author_info' book.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="작가 정보 생성">
+  </form>
+  <hr>
+
+  {% if request.user == book.user %}
+    <a href="{% url 'books:update' book.pk %}">수정</a>
+    <form action="{% url 'books:delete' book.pk %}" method="POST" style="display:inline;">
+      {% csrf_token %}
+      <input type="submit" value="삭제">
+    </form>
+  {% endif %}
+
+  <hr>
+  <a href="{% url 'books:index' %}">홈으로</a>
+{% endblock %}

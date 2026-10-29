@@ -1,0 +1,86 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main class="home-page">
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">BOOK &amp; LIFE</p>
+
+      <h1>
+        한 권의 책이 되는<br>
+        나의 이야기
+      </h1>
+
+      <p class="hero-description">
+        읽은 책을 기록하고, 작가의 이야기를 만나 보세요.<br>
+        당신만의 독서 기록을 하루록에 담아보세요.
+      </p>
+
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'books:create' %}" class="btn-ink">
+          도서 등록하기 →
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="hero-image">
+      <img
+        src="{% static 'images/hero-book.jpg' %}"
+        alt="햇살이 비치는 책과 테이블"
+      >
+    </div>
+  </section>
+
+  <section class="book-section">
+    <div class="section-heading">
+      <div>
+        <p class="section-eyebrow">RECOMMENDED BOOKS</p>
+        <h2>지금, 이 책은 어때요?</h2>
+        <p class="section-description">
+          하루록에 기록된 책들을 만나보세요.
+        </p>
+      </div>
+
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'books:create' %}" class="text-link">
+          + 도서 등록
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="book-grid">
+      {% for book in books %}
+        <a href="{% url 'books:detail' book.pk %}" class="book-card">
+
+          <div class="book-cover-placeholder">
+            <span class="cover-title">{{ book.title }}</span>
+            <span class="cover-author">{{ book.author }}</span>
+          </div>
+
+          <div class="book-info">
+            <h3>{{ book.title }}</h3>
+            <p class="book-author">{{ book.author }}</p>
+            <p class="book-rating">
+              기록자 {{ book.user.username }}
+            </p>
+          </div>
+
+        </a>
+      {% empty %}
+        <div class="empty-books">
+          <p>아직 등록된 도서가 없어요.</p>
+          <p>첫 번째 책을 기록해 보세요.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <p>오늘의 기록이 모여, 나만의 이야기가 됩니다.</p>
+  </section>
+
+</main>
+{% endblock %}

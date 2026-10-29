@@ -1,9 +1,10 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
-from django.views.decorators.http import require_http_methods, require_POST
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods, require_POST, require_safe
 
 from .forms import (
     CustomAuthenticationForm,
@@ -94,3 +95,10 @@ def change_password(request):
         form = CustomPasswordChangeForm(request.user)
     context = {'form': form}
     return render(request, 'accounts/change_password.html', context)
+
+
+# F419 profile
+@require_safe
+def profile(request, username):
+    person = get_object_or_404(get_user_model(), username=username)
+    return render(request, 'accounts/profile.html', {'person': person})

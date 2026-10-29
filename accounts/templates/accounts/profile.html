@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ person.username }}님의 프로필</h1>
+
+  {% if person.introduction %}
+    <p>{{ person.introduction }}</p>
+  {% endif %}
+
+  <h2>작성한 도서</h2>
+  {% for book in person.book_set.all %}
+    <p>
+      <a href="{% url 'books:detail' book.pk %}">{{ book.title }}</a>
+      <small>{{ book.author }}</small>
+    </p>
+  {% empty %}
+    <p>아직 작성한 도서가 없어요.</p>
+  {% endfor %}
+{% endblock %}
